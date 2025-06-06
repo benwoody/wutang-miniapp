@@ -1,24 +1,23 @@
-# My Website
+# Wu-Tang Name Generator Miniapp
 
-This project is a simple website built with HTML, CSS, and JavaScript. It serves as a template for creating a responsive and interactive web application.
+A Farcaster Frame Miniapp that generates a Wu-Tang Clan style name based on your Farcaster username and displays it on a Wu-Tang logo background.
 
 ## Project Structure
 
 ```
-my-website
-├── src
-│   ├── index.html        # Main HTML document
-│   ├── styles
-│   │   └── style.css     # Styles for the website
-│   └── scripts
-│       └── main.js       # JavaScript functionality
+wutang-miniapp
+├── index.html            # Main HTML document
+├── styles
+│   └── style.css         # Styles for the miniapp
+├── scripts
+│   └── main.js           # Main JavaScript logic
+├── assets
+│   └── wu-logo.png       # Wu-Tang logo image
 ├── package.json          # npm configuration file
 └── README.md             # Project documentation
 ```
 
 ## Getting Started
-
-To get started with this project, follow these steps:
 
 1. Clone the repository to your local machine:
    ```
@@ -27,7 +26,7 @@ To get started with this project, follow these steps:
 
 2. Navigate to the project directory:
    ```
-   cd my-website
+   cd wutang-miniapp
    ```
 
 3. Install the necessary dependencies:
@@ -35,12 +34,16 @@ To get started with this project, follow these steps:
    npm install
    ```
 
-4. Open the `src/index.html` file in your web browser to view the website.
+4. Open `index.html` in your web browser, or deploy as a Farcaster Frame Miniapp.
 
-## Usage
+## Features
 
-You can modify the HTML, CSS, and JavaScript files to customize the website according to your needs. The `main.js` file is where you can add interactivity and functionality.
+- Automatically fetches your Farcaster username (when run as a Farcaster Frame)
+- Generates a unique Wu-Tang name based on your username
+- Renders your Wu-Tang name on a Wu-Tang logo canvas
+- Optionally mint your Wu-Tang name as an NFT (demo)
+- Download your personalized Wu-Tang name image
 
 ## License
 
-This project is licensed under the MIT License.
+MIT
