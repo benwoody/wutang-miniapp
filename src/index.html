@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="fc:frame" content="<stringified FrameEmbed JSON>" />
     <title>Wu-Tang Name Generator</title>
     <link rel="stylesheet" href="styles/style.css">
 </head>
@@ -16,13 +17,12 @@
             <input type="text" id="userInput" placeholder="e.g. benwoodall" />
             <button id="generateBtn">Generate Wu-Tang Name</button>
             <div id="result" class="result"></div>
-            <canvas id="wuCanvas" width="400" height="200" style="display:none; margin-top:1rem;"></canvas>
+            <canvas id="wuCanvas" width="400" height="300" style="display:none; margin-top:1rem;"></canvas>
             <button id="mintBtn" style="display:none;">Mint as NFT</button>
             <div id="mintStatus"></div>
         </section>
     </main>
     <footer>
-        <p>&copy; 2025 Wu-Tang Miniapp</p>
     </footer>
     <script src="scripts/main.js"></script>
 </body>

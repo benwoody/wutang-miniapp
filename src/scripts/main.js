@@ -1,16 +1,21 @@
 // Wu-Tang Name Generator logic and NFT mint button handling
 
+import { sdk } from '@farcaster/frame-sdk'
+await sdk.actions.ready();
+
 const prefixes = [
   "Ol'", "Mighty", "Ghost", "Divine", "Master", "Dirty", "Rebel", "Golden",
   "Rogue", "Shadow", "Mystic", "Thunder", "Silent", "Cunning", "Furious",
   "Iron", "Swift", "Mysterious", "Ruthless", "Venomous", "Savage", "Crimson",
-  "Arcane", "Stealthy", "Wicked", "Blazing", "Storm"
+  "Arcane", "Stealthy", "Wicked", "Blazing", "Storm",
+  "Supreme", "Royal", "Atomic", "Cosmic", "Electric", "Lyrical", "Infinite", "Dynamic"
 ];
 const suffixes = [
   "Shogun", "Samurai", "Monk", "Assassin", "Ninja", "Warrior", "Scholar",
   "Sage", "Chef", "Disciple", "Bastard", "Genius", "Monarch", "Tiger", "Dragon",
   "Prophet", "Champion", "Sentinel", "Nomad", "Reaper", "Titan", "Vanguard",
-  "Ronin", "Oracle", "Wanderer", "Mercenary", "Seer", "Gladiator"
+  "Ronin", "Oracle", "Wanderer", "Mercenary", "Seer", "Gladiator",
+  "Alchemist", "Scribe", "Juggernaut", "Phoenix", "Sultan", "Baron", "Bandit", "Outlaw"
 ];
 
 function generateWuTangName(seed) {
