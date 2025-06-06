@@ -1,0 +1,22 @@
+{
+  "name": "my-website",
+  "version": "1.0.0",
+  "description": "A simple website project with JavaScript functionality.",
+  "main": "src/scripts/main.js",
+  "scripts": {
+    "start": "live-server src",
+    "build": "echo 'Build step can be added here.'"
+  },
+  "keywords": [
+    "website",
+    "javascript",
+    "html",
+    "css"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}
