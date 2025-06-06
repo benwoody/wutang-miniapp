@@ -64,7 +64,7 @@ document.getElementById('generateBtn').addEventListener('click', () => {
     return;
   }
   const wuName = generateWuTangName(userInput);
-  resultDiv.innerHTML = `Your Wu-Tang name:<br><span>${wuName}</span>`;
+  resultDiv.innerHTML = `Your Wu-Tang name:<br><br><span>${wuName}</span>`;
   mintBtn.style.display = "inline-block";
   mintBtn.dataset.wuname = wuName;
   drawWuTangImage(wuName);
