@@ -21,21 +21,54 @@ function generateWuTangName(seed) {
   return `${prefix} ${suffix}`;
 }
 
+// Draws the Wu-Tang name on the Wu-Tang logo background
+function drawWuTangImage(wuName) {
+  const canvas = document.getElementById('wuCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  img.src = 'assets/wu-logo.png'; // Make sure this path is correct
+
+  img.onload = function() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    // Draw the Wu-Tang name text
+    ctx.font = "bold 32px Impact, Arial Black, sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = "#181818";
+    ctx.fillStyle = "#f1c40f";
+    // Stroke for contrast
+    ctx.strokeText(wuName, canvas.width / 2, canvas.height / 2 + 3);
+    ctx.fillText(wuName, canvas.width / 2, canvas.height / 2 + 3);
+
+    canvas.style.display = "block";
+  };
+}
+
 document.getElementById('generateBtn').addEventListener('click', () => {
   const userInput = document.getElementById('userInput').value.trim();
   const resultDiv = document.getElementById('result');
   const mintBtn = document.getElementById('mintBtn');
   const mintStatus = document.getElementById('mintStatus');
+  const canvas = document.getElementById('wuCanvas');
+  const downloadBtn = document.getElementById('downloadBtn');
   mintStatus.textContent = '';
   if (!userInput) {
     resultDiv.textContent = "Please enter a name or Farcaster ID!";
     mintBtn.style.display = "none";
+    if (canvas) canvas.style.display = "none";
+    if (downloadBtn) downloadBtn.style.display = "none";
     return;
   }
   const wuName = generateWuTangName(userInput);
-  resultDiv.textContent = `Your Wu-Tang name: ${wuName}`;
+  resultDiv.innerHTML = `Your Wu-Tang name:<br><span>${wuName}</span>`;
   mintBtn.style.display = "inline-block";
   mintBtn.dataset.wuname = wuName;
+  drawWuTangImage(wuName);
+  if (downloadBtn) downloadBtn.style.display = "inline-block";
 });
 
 document.getElementById('mintBtn').addEventListener('click', async (e) => {
@@ -48,3 +81,16 @@ document.getElementById('mintBtn').addEventListener('click', async (e) => {
     mintStatus.textContent = `NFT minted for "${wuName}"! (Demo only)`;
   }, 2000);
 });
+
+// Download button logic
+const downloadBtn = document.getElementById('downloadBtn');
+if (downloadBtn) {
+  downloadBtn.addEventListener('click', () => {
+    const canvas = document.getElementById('wuCanvas');
+    if (!canvas) return;
+    const link = document.createElement('a');
+    link.download = 'wu-tang-name.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+}
