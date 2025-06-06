@@ -7,8 +7,18 @@ const prefixes = [
   "Ol'", "Mighty", "Ghost", "Divine", "Master", "Dirty", "Rebel", "Golden",
   "Rogue", "Shadow", "Mystic", "Thunder", "Silent", "Cunning", "Furious",
   "Iron", "Swift", "Mysterious", "Ruthless", "Venomous", "Savage", "Crimson",
-  "Arcane", "Stealthy", "Wicked", "Blazing", "Storm",
-  "Supreme", "Royal", "Atomic", "Cosmic", "Electric", "Lyrical", "Infinite", "Dynamic"
+  "Arcane", "Stealthy", "Wicked", "Blazing", "Storm", "Supreme", "Royal",
+  "Atomic", "Cosmic", "Electric", "Lyrical", "Infinite", "Dynamic", "Bronze",
+  "Silver", "Platinum", "Diamond", "Obsidian", "Solar", "Lunar", "Frosty",
+  "Icy", "Fire", "Shadowy", "Vicious", "Silent", "Rapid", "Majestic", "Noble",
+  "Fearless", "Bold", "Ancient", "Modern", "Digital", "Analog", "Quantum",
+  "Turbo", "Mega", "Ultra", "Hyper", "Wild", "Enigmatic", "Radiant", "Celestial",
+  "Galactic", "Nebula", "Stellar", "Meteoric", "Eternal", "Sacred", "Blessed",
+  "Cyborg", "Samurai", "Ninja", "Dragon", "Tiger", "Wolf", "Lion", "Panther",
+  "Falcon", "Viper", "Cobra", "Jaguar", "Rhino", "Ox", "Bear", "Eagle", "Hawk",
+  "Phoenix", "Grim", "Shadowfax", "Turbo", "Alpha", "Omega", "Beta", "Gamma",
+  "Delta", "Sigma", "Zeta", "Razor", "Blade", "Steel", "Stone", "Brick", "Marble",
+  "Ivory", "Onyx", "Pearl", "Ruby", "Sapphire", "Emerald", "Opal", "Topaz"
 ];
 const suffixes = [
   "Shogun", "Samurai", "Monk", "Assassin", "Ninja", "Warrior", "Scholar",
@@ -53,28 +63,44 @@ function drawWuTangImage(wuName) {
   };
 }
 
-document.getElementById('generateBtn').addEventListener('click', () => {
-  const userInput = document.getElementById('userInput').value.trim();
+// Get Farcaster username and generate Wu-Tang name
+async function initWithFarcaster() {
   const resultDiv = document.getElementById('result');
   const mintBtn = document.getElementById('mintBtn');
   const mintStatus = document.getElementById('mintStatus');
   const canvas = document.getElementById('wuCanvas');
   const downloadBtn = document.getElementById('downloadBtn');
-  mintStatus.textContent = '';
-  if (!userInput) {
-    resultDiv.textContent = "Please enter a name or Farcaster ID!";
+
+  try {
+    const context = await sdk.getContext();
+    const username = context?.user?.username;
+    
+    if (!username) {
+      resultDiv.textContent = "Could not get Farcaster username";
+      mintBtn.style.display = "none";
+      if (canvas) canvas.style.display = "none";
+      if (downloadBtn) downloadBtn.style.display = "none";
+      return;
+    }
+
+    const wuName = generateWuTangName(username);
+    resultDiv.innerHTML = `@${username}'s Wu-Tang name:<br><br><span>${wuName}</span>`;
+    mintBtn.style.display = "inline-block";
+    mintBtn.dataset.wuname = wuName;
+    drawWuTangImage(wuName);
+    if (downloadBtn) downloadBtn.style.display = "inline-block";
+
+  } catch (err) {
+    console.error("Error getting Farcaster context:", err);
+    resultDiv.textContent = "Error getting Farcaster username";
     mintBtn.style.display = "none";
     if (canvas) canvas.style.display = "none";
     if (downloadBtn) downloadBtn.style.display = "none";
-    return;
   }
-  const wuName = generateWuTangName(userInput);
-  resultDiv.innerHTML = `Your Wu-Tang name:<br><br><span>${wuName}</span>`;
-  mintBtn.style.display = "inline-block";
-  mintBtn.dataset.wuname = wuName;
-  drawWuTangImage(wuName);
-  if (downloadBtn) downloadBtn.style.display = "inline-block";
-});
+}
+
+// Initialize when the page loads
+window.addEventListener('DOMContentLoaded', initWithFarcaster);
 
 document.getElementById('mintBtn').addEventListener('click', async (e) => {
   const wuName = e.target.dataset.wuname;
