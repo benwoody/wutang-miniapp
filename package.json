@@ -5,7 +5,9 @@
   "scripts": {
     "test": "jest"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@farcaster/frame-sdk": "^0.0.60"
+  },
   "devDependencies": {
     "jest": "^27.0.0"
   }
