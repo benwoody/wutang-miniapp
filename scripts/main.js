@@ -1,3 +1,5 @@
+import { sdk } from 'https://esm.sh/@farcaster/frame-sdk';
+
 // Wu-Tang name generation data
 const prefixes = [
   "Ol'", "Mighty", "Ghost", "Divine", "Master", "Dirty", "Rebel", "Golden",
@@ -109,3 +111,32 @@ if (downloadBtn) {
     link.click();
   });
 }
+
+// Initialize Farcaster functionality
+async function initializeFarcaster() {
+  await sdk.actions.ready();
+  const context = await sdk.context;
+
+  async function getFarcasterUsername() {
+    return context.user.username;
+  }
+
+  const username = await getFarcasterUsername();
+  document.getElementById('usernameDisplay').innerHTML = `${username}`;
+
+  document.getElementById('generateBtn')?.addEventListener('click', async () => {
+    const username = await getFarcasterUsername();
+    if (!username) {
+      document.getElementById('result').textContent = "Could not retrieve Farcaster username!";
+      return;
+    }
+
+    document.getElementById('generateBtn').remove();
+    const wuTangName = generateWuTangName(username);
+    document.getElementById('result').innerHTML = `From this day forward,<br>you will also be known as<br><br><span>${wuTangName}</span>`;
+    drawWuTangImage(wuTangName);
+  });
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeFarcaster);

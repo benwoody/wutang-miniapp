@@ -43,6 +43,7 @@ wutang-miniapp
 - Renders your Wu-Tang name on a Wu-Tang logo canvas
 
 ## Upcoming
+
 - Optionally mint your Wu-Tang name as an NFT (demo)
 - Cast your personalized Wu-Tang name image
 
