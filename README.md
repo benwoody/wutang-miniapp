@@ -41,8 +41,10 @@ wutang-miniapp
 - Automatically fetches your Farcaster username (when run as a Farcaster Frame)
 - Generates a unique Wu-Tang name based on your username
 - Renders your Wu-Tang name on a Wu-Tang logo canvas
+
+## Upcoming
 - Optionally mint your Wu-Tang name as an NFT (demo)
-- Download your personalized Wu-Tang name image
+- Cast your personalized Wu-Tang name image
 
 ## License
 

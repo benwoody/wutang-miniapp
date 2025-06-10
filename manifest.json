@@ -1,0 +1,16 @@
+{
+  "name": "Wu-Tang Name Generator",
+  "short_name": "Wu-Tang Miniapp",
+  "description": "Generate your Wu-Tang Clan name using your Farcaster username.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#000",
+  "theme_color": "#000",
+  "icons": [
+    {
+      "src": "assets/wu-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

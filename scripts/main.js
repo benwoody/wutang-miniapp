@@ -1,33 +1,36 @@
-// Wu-Tang Name Generator logic and NFT mint button handling
-
-import { sdk } from '@farcaster/frame-sdk'
-await sdk.actions.ready();
-
+// Wu-Tang name generation data
 const prefixes = [
   "Ol'", "Mighty", "Ghost", "Divine", "Master", "Dirty", "Rebel", "Golden",
   "Rogue", "Shadow", "Mystic", "Thunder", "Silent", "Cunning", "Furious",
   "Iron", "Swift", "Mysterious", "Ruthless", "Venomous", "Savage", "Crimson",
   "Arcane", "Stealthy", "Wicked", "Blazing", "Storm", "Supreme", "Royal",
-  "Atomic", "Cosmic", "Electric", "Lyrical", "Infinite", "Dynamic", "Bronze",
-  "Silver", "Platinum", "Diamond", "Obsidian", "Solar", "Lunar", "Frosty",
-  "Icy", "Fire", "Shadowy", "Vicious", "Silent", "Rapid", "Majestic", "Noble",
-  "Fearless", "Bold", "Ancient", "Modern", "Digital", "Analog", "Quantum",
   "Turbo", "Mega", "Ultra", "Hyper", "Wild", "Enigmatic", "Radiant", "Celestial",
-  "Galactic", "Nebula", "Stellar", "Meteoric", "Eternal", "Sacred", "Blessed",
-  "Cyborg", "Samurai", "Ninja", "Dragon", "Tiger", "Wolf", "Lion", "Panther",
-  "Falcon", "Viper", "Cobra", "Jaguar", "Rhino", "Ox", "Bear", "Eagle", "Hawk",
-  "Phoenix", "Grim", "Shadowfax", "Turbo", "Alpha", "Omega", "Beta", "Gamma",
-  "Delta", "Sigma", "Zeta", "Razor", "Blade", "Steel", "Stone", "Brick", "Marble",
-  "Ivory", "Onyx", "Pearl", "Ruby", "Sapphire", "Emerald", "Opal", "Topaz"
-];
-const suffixes = [
-  "Shogun", "Samurai", "Monk", "Assassin", "Ninja", "Warrior", "Scholar",
-  "Sage", "Chef", "Disciple", "Bastard", "Genius", "Monarch", "Tiger", "Dragon",
-  "Prophet", "Champion", "Sentinel", "Nomad", "Reaper", "Titan", "Vanguard",
-  "Ronin", "Oracle", "Wanderer", "Mercenary", "Seer", "Gladiator",
-  "Alchemist", "Scribe", "Juggernaut", "Phoenix", "Sultan", "Baron", "Bandit", "Outlaw"
+  "Dragon", "Tiger", "Wolf", "Lion", "Panther", "Falcon", "Viper", "Cobra",
+  "Eagle", "Hawk", "Phoenix", "Alpha", "Omega", "Gamma", "Sigma",
+  "Vortex", "Shadowborn", "Lunar", "Ironclad", "Obsidian", "Turbocharged",
+  "Solar", "Frostborn", "Infernal", "Wildstyle", "Dynamic", "Warborn", "Titan",
+  "Quantum", "Echo", "Phantom", "Zen", "Thunderous", "Untamed", "Savage",
+  "Majestic", "Slick", "Ghostly", "Cybernetic", "Magnetic", "Stormborn",
+  "Electric", "Merciless", "Monolithic", "Blazing", "Perpetual", "Neo",
+  "Spectral", "Volcanic", "Runic", "Titanic", "Elemental", "Omniscient",
+  "Draconic", "Epoch", "Spartan", "Nomadic", "Tectonic", "Feral", "Zealous",
+  "Dagger", "Warped", "Frost", "Mirrored", "Eldritch", "Crystalline", "Meteoric",
+  "Interstellar", "Crimson", "Scarlet", "Azure", "Emerald", "Sapphire", "Ruby", "Ivory", "Onyx",
+  "Golden", "Silver", "Bronze", "Copper", "Platinum", "Obsidian", "Pearl", "Cyan",
+  "Vermilion", "Indigo", "Amethyst", "Turquoise", "Magenta", "Teal", "Coral",
+  "Amber", "Topaz", "Jade", "Garnet"
 ];
 
+const suffixes = [
+  "Shogun", "Samurai", "Monk", "Assassin", "Ninja", "Warrior", "Scholar",
+  "Sage", "Chef", "Disciple", "Bastard", "Genius", "Monarch", "Prophet",
+  "Champion", "Sentinel", "Nomad", "Reaper", "Titan", "Vanguard",
+  "Ronin", "Oracle", "Wanderer", "Mercenary", "Seer", "Gladiator",
+  "Alchemist", "Scribe", "Juggernaut", "Phoenix", "Sultan", "Baron", "Outlaw",
+  "Leader", "Demon", "Wizard", "Gravedigger", "Wayfarer", "Shepherd"
+];
+
+// Generate a Wu-Tang name from user input
 function generateWuTangName(seed) {
   if (!seed) return "";
   const hash = Array.from(seed).reduce((acc, char) => acc + char.charCodeAt(0), 0);
@@ -42,7 +45,7 @@ function drawWuTangImage(wuName) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const img = new Image();
-  img.src = 'assets/wu-logo.png'; // Make sure this path is correct
+  img.src = 'assets/wu-logo.png';
 
   img.onload = function() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -55,6 +58,7 @@ function drawWuTangImage(wuName) {
     ctx.lineWidth = 6;
     ctx.strokeStyle = "#181818";
     ctx.fillStyle = "#f1c40f";
+
     // Stroke for contrast
     ctx.strokeText(wuName, canvas.width / 2, canvas.height / 2 + 3);
     ctx.fillText(wuName, canvas.width / 2, canvas.height / 2 + 3);
@@ -63,54 +67,34 @@ function drawWuTangImage(wuName) {
   };
 }
 
-// Get Farcaster username and generate Wu-Tang name
-async function initWithFarcaster() {
-  const resultDiv = document.getElementById('result');
-  const mintBtn = document.getElementById('mintBtn');
-  const mintStatus = document.getElementById('mintStatus');
-  const canvas = document.getElementById('wuCanvas');
-  const downloadBtn = document.getElementById('downloadBtn');
-
-  try {
-    const context = await sdk.getContext();
-    const username = context?.user?.username;
-    
-    if (!username) {
-      resultDiv.textContent = "Could not get Farcaster username";
-      mintBtn.style.display = "none";
-      if (canvas) canvas.style.display = "none";
-      if (downloadBtn) downloadBtn.style.display = "none";
-      return;
-    }
-
-    const wuName = generateWuTangName(username);
-    resultDiv.innerHTML = `@${username}'s Wu-Tang name:<br><br><span>${wuName}</span>`;
-    mintBtn.style.display = "inline-block";
-    mintBtn.dataset.wuname = wuName;
-    drawWuTangImage(wuName);
-    if (downloadBtn) downloadBtn.style.display = "inline-block";
-
-  } catch (err) {
-    console.error("Error getting Farcaster context:", err);
-    resultDiv.textContent = "Error getting Farcaster username";
-    mintBtn.style.display = "none";
-    if (canvas) canvas.style.display = "none";
-    if (downloadBtn) downloadBtn.style.display = "none";
-  }
-}
-
-// Initialize when the page loads
-window.addEventListener('DOMContentLoaded', initWithFarcaster);
-
+// Minting an NFT on Base Chain
 document.getElementById('mintBtn').addEventListener('click', async (e) => {
   const wuName = e.target.dataset.wuname;
   const mintStatus = document.getElementById('mintStatus');
-  mintStatus.textContent = "Connecting wallet and minting NFT...";
+  const canvas = document.getElementById('wuCanvas');
 
-  // Placeholder for wallet/NFT logic
-  setTimeout(() => {
-    mintStatus.textContent = `NFT minted for "${wuName}"! (Demo only)`;
-  }, 2000);
+  if (!canvas) {
+    mintStatus.textContent = "Canvas image not found!";
+    return;
+  }
+
+  // Convert canvas image to base64
+  const imageData = canvas.toDataURL("image/png");
+  mintStatus.textContent = "Generating NFT data...";
+
+  try {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    const signer = provider.getSigner();
+
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+    const tx = await contract.mintTo(await signer.getAddress(), imageData);
+    await tx.wait();
+
+    mintStatus.textContent = `NFT minted successfully for "${wuName}"!`;
+  } catch (error) {
+    mintStatus.textContent = `Minting failed: ${error.message}`;
+  }
 });
 
 // Download button logic
