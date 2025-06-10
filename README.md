@@ -13,28 +13,9 @@ wutang-miniapp
 │   └── main.js           # Main JavaScript logic
 ├── assets
 │   └── wu-logo.png       # Wu-Tang logo image
-├── package.json          # npm configuration file
+├── manifest.json         # Farcaster manifest file
 └── README.md             # Project documentation
 ```
-
-## Getting Started
-
-1. Clone the repository to your local machine:
-   ```
-   git clone <repository-url>
-   ```
-
-2. Navigate to the project directory:
-   ```
-   cd wutang-miniapp
-   ```
-
-3. Install the necessary dependencies:
-   ```
-   npm install
-   ```
-
-4. Open `index.html` in your web browser, or deploy as a Farcaster Frame Miniapp.
 
 ## Features
 
